@@ -242,10 +242,11 @@ body {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 65px;
     font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.1;
+    letter-spacing: 2.2px;
 }
 
 .hero-title-line {
@@ -416,6 +417,8 @@ section {
     position: relative;
     height: 250px;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 
 .work-placeholder {
@@ -641,14 +644,16 @@ section {
 }
 
 .contact-icon {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #e0e0e0;
+    font-size: 40px;
+    transition: all 0.3s ease;
 }
 
 .contact-details h3 {
@@ -660,6 +665,10 @@ section {
 .contact-details p {
     color: #e0e0e0;
     font-weight: 300;
+}
+
+.contact-details a {
+    text-decoration: none;
 }
 
 .contact-form {
@@ -767,12 +776,12 @@ section {
 
 .social-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .social-link {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
@@ -780,7 +789,11 @@ section {
     justify-content: center;
     color: #e0e0e0;
     transition: all 0.3s ease;
+    font-size: 30px;
+    text-decoration: none;
 }
+
+
 
 .social-link:hover {
     background: rgba(255, 255, 255, 0.2);
