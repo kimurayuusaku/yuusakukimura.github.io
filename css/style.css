@@ -490,18 +490,44 @@ section {
 /* About Section */
 .about {
     background: #f8f9fa;
+    width: 100%;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 4rem;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-flow: column;
 }
 
 .about-text .section-header {
     text-align: left;
     margin-bottom: 2rem;
+}
+
+.about-text {
+    display: flex;
+    width: 100%;
+}
+
+
+.about-text2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.about-text-content {
+    width: 50%;
 }
 
 .about-description p {
@@ -511,53 +537,105 @@ section {
     margin-bottom: 1.5rem;
 }
 
-.skills {
-    margin-top: 3rem;
+.skills-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 4rem 0px 0px 0px;
+  background-color: #f5f8ff;
 }
 
-.skills-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2d2d2d;
-    margin-bottom: 2rem;
-    letter-spacing: 2px;
+.skill-card {
+  background-color: #404040;
+  color: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 31%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.skills-grid {
-    display: grid;
-    gap: 1.5rem;
+.skill-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
 }
 
-.skill-item {
-    display: flex;
+.skill-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  background-color: #585858;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.skill-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.skill-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.skill-tools {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #d4d4d4;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .skills-section {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .skill-card {
+  width: 100%;
+  margin-bottom: 2rem;
+}
 }
 
-.skill-name {
-    font-weight: 500;
+.license-section {
+    margin-top: 60px;
+    padding: 0 0px 0px 0px;
+    background-color: #f5f8ff;
+    width: 100%;
+}
+
+.license-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.license-list {
+    list-style-type: disc;
+    margin-left: 2em;
+    padding-left: 0;
+    font-size: 18px;
+    line-height: 1.8;
     color: #4a4a4a;
-    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
 }
 
-.skill-bar {
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, #4a4a4a, #6b6b6b);
-    width: 0%;
-    transition: width 1.5s ease;
-    border-radius: 4px;
-}
 
 .about-image {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
 }
 
 .profile-card {
@@ -566,7 +644,6 @@ section {
     padding: 2rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 300px;
     transition: transform 0.3s ease;
 }
 
@@ -575,13 +652,14 @@ section {
 }
 
 .profile-placeholder {
-    width: 200px;
-    height: 200px;
+    width: 260px;
+    height: 260px;
     background-image: url(../images/木村優作1.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
+    border: 4px solid #6b6b6b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -595,10 +673,11 @@ section {
 }
 
 .profile-name {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: #2d2d2d;
     margin-bottom: 0.5rem;
+    letter-spacing: 2px;
 }
 
 .profile-title {
