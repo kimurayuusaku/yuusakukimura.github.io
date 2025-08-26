@@ -932,6 +932,15 @@ section {
         font-size: 2rem;
     }
 
+
+    .about-container {
+    flex-flow: column;
+    }   
+    
+    .about-text {
+    flex-flow: column;
+    }
+
     .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -939,6 +948,15 @@ section {
 
     .about-text .section-header {
         text-align: center;
+    }
+
+    .about-text-content {
+    width: 100%;
+    }
+
+    .about-image {
+    justify-content: center;
+    width: 100%;
     }
 
     .contact-content {
