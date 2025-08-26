@@ -289,7 +289,9 @@ body {
 .hero-scroll {
     position: absolute;
     bottom: 2rem;
-    left: 50%;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
@@ -938,7 +940,7 @@ section {
     }   
     
     .about-text {
-    flex-flow: column;
+    flex-direction: column-reverse;
     }
 
     .about-content {
@@ -957,6 +959,7 @@ section {
     .about-image {
     justify-content: center;
     width: 100%;
+    margin-bottom: 40px;
     }
 
     .contact-content {
@@ -1024,4 +1027,296 @@ section {
     overflow: hidden;
 }
 
-/* 手書きCSS */
+/* project-detail.css */
+/* 既存のstyle.cssに追加するか、新しくファイルを作成して読み込んでください */
+
+/* Section: Project Detail */
+.project-detail {
+    padding: 100px 0;
+    background-color: #f8f9fa;
+}
+
+.project-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.project-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.project-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.project-tags {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.project-hero {
+    margin-bottom: 4rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.project-hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Overview Section */
+.project-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.overview-item {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid #333;
+}
+
+.overview-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.overview-text,
+.overview-list {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+.overview-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.overview-list li::before {
+    content: '▶';
+    color: #333;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* Project Content Section */
+.project-content {
+    margin-bottom: 4rem;
+}
+
+.section-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    border-left: 5px solid #333;
+    padding-left: 1rem;
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem 0;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Back to Top Button */
+.back-to-top {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.back-to-top .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top .btn:hover {
+    background-color: #555;
+    transform: translateY(-3px);
+}
+
+/* Related Projects Section */
+.related-projects {
+    text-align: center;
+    margin-top: 6rem;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.related-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.related-item:hover {
+    transform: translateY(-5px);
+}
+
+.related-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.related-item h3 {
+    font-size: 1.2rem;
+    padding: 1.5rem;
+    color: #333;
+}
+
+/* ==================================== */
+/* レスポンシブ対応スタイル          */
+/* ==================================== */
+
+/* 768px以下の画面サイズ */
+@media (max-width: 768px) {
+    .project-detail {
+        padding: 80px 0;
+    }
+
+    .project-header {
+        margin-bottom: 3rem;
+    }
+
+    .project-title {
+        font-size: 2.5rem;
+    }
+
+    .project-subtitle {
+        font-size: 1rem;
+    }
+
+    .project-hero {
+        margin-bottom: 3rem;
+    }
+
+    .project-overview {
+        grid-template-columns: 1fr; /* 1列に変更 */
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .overview-item {
+        padding: 2rem;
+    }
+
+    .overview-title {
+        font-size: 1.3rem;
+    }
+
+    .project-content {
+        margin-bottom: 3rem;
+    }
+
+    .section-heading {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+    }
+
+    .project-image {
+        margin: 1.5rem 0;
+    }
+
+    .back-to-top {
+        margin-top: 3rem;
+    }
+    
+    .back-to-top .btn {
+        padding: 0.8rem 1.8rem;
+        font-size: 0.9rem;
+    }
+
+    .related-projects {
+        margin-top: 4rem;
+    }
+
+    .related-grid {
+        grid-template-columns: 1fr; /* 1列に変更 */
+    }
+}
+
+/* 480px以下の画面サイズ */
+@media (max-width: 480px) {
+    .project-detail {
+        padding: 60px 0;
+    }
+    
+    .project-title {
+        font-size: 2rem;
+    }
+
+    .project-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .project-hero {
+        margin-bottom: 2rem;
+    }
+
+    .overview-item {
+        padding: 1.5rem;
+    }
+
+    .overview-title {
+        font-size: 1.2rem;
+    }
+
+    .overview-text,
+    .overview-list {
+        font-size: 0.9rem;
+    }
+    
+    .section-heading {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .project-image {
+        margin: 1rem 0;
+    }
+
+    .back-to-top .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.8rem;
+    }
