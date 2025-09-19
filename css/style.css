@@ -1205,6 +1205,130 @@ section {
     color: #333;
 }
 
+/* お知らせセクションの基本レイアウト */
+.note-news-section {
+    padding: 20px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+
+/* タイトル */
+.note-news-section h2 {
+    font-size: 1.2em;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* 記事リストの装飾を解除 */
+.note-article-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 個別の記事のスタイル */
+.note-article-item {
+    display: flex; /* 日付とタイトルを横並びにする */
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* 日付のスタイル */
+.article-date {
+    color: #666;
+    font-size: 0.9em;
+    flex-shrink: 0; /* 幅を固定 */
+    margin-right: 15px;
+}
+
+/* タイトルのスタイル */
+.article-title {
+    color: #333;
+    text-decoration: none;
+    font-size: 1em;
+    /* ホバー時の効果 */
+    transition: color 0.2s;
+}
+
+.article-title:hover {
+    color: #249084; /* ご希望のグリーンなど */
+    text-decoration: underline;
+}
+
+.note-news-container h2 {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.note-news-container {
+    width: 60%;
+}
+
+.note-news-container2 {
+    width: 40%;
+    padding: 0px 60px;
+    text-align: center;
+}
+
+.note-news-container3 {
+    background-color: #404040;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px
+}
+
+.note-content {
+    display: flex;
+}
+
+.note-image {
+    width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+.note-news-container3-title {
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: 500;
+}
+.note-news-container3-text {
+    font-size: 12px;
+    text-align: left;
+    font-weight: 400;
+    color: #dcdbdb;
+}
+
+.news-card {
+    text-decoration: none;
+}
+
+.news-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #e0e0e0;
+    background: transparent;
+    background-color: #2D2D2D;
+    color: #fff;
+    font-weight: 400;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    margin-top: 15px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.news-btn:hover,
+.news-btn.active {
+    background: #2d2d2d;
+    color: white;
+    border-color: #2d2d2d;
+    transform: translateY(-2px);
+}
 /* ==================================== */
 /* レスポンシブ対応スタイル          */
 /* ==================================== */
@@ -1274,6 +1398,20 @@ section {
     .related-grid {
         grid-template-columns: 1fr; /* 1列に変更 */
     }
+    .note-content {
+        display: flex;
+        flex-flow: column;
+    }
+    .note-news-container {
+    width: 100%;
+    }
+
+    .note-news-container2 {
+    width: 100%;
+    padding: 0px 60px;
+    text-align: center;
+    margin-top: 60px;
+    }
 }
 
 /* 480px以下の画面サイズ */
@@ -1320,3 +1458,10 @@ section {
         padding: 0.7rem 1.5rem;
         font-size: 0.8rem;
     }
+
+    .note-news-container2 {
+    width: 100%;
+    padding: 0px 20px;
+    text-align: center;
+    }
+}
