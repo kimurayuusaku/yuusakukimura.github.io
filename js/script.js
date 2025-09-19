@@ -416,6 +416,7 @@ class Utils {
 }
 
 // Main Application
+
 class PortfolioApp {
     constructor() {
         this.navigationController = new NavigationController();
@@ -423,6 +424,9 @@ class PortfolioApp {
         this.workGallery = new WorkGallery();
         this.contactForm = new ContactForm();
         this.loadingAnimation = new LoadingAnimation();
+        // ★追加: RSS APIのエンドポイントを設定
+        this.NOTE_API_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https://note.com/dododo0125/rss';
+        this.listElement = document.getElementById('note-article-list');
     }
 
     init() {
@@ -447,7 +451,61 @@ class PortfolioApp {
             this.workGallery.init();
             this.contactForm.init();
             this.initializeCustomEffects();
+            // ★修正: アプリケーション初期化後に記事読み込みを実行
+            this.fetchNoteArticles(); 
         }, 100);
+    }
+
+    fetchNoteArticles() {
+        if (!this.listElement) {
+            console.error('note-article-list要素が見つかりませんでした。');
+            return;
+        }
+
+        // 記事リストをクリア
+        this.listElement.innerHTML = '';
+
+        fetch(this.NOTE_API_URL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status !== 'ok' || !data.items) {
+                    // ★デバッグ: 取得したデータをコンソールに出力して確認
+                    console.error('RSS2JSONからのデータ:', data);
+                    throw new Error('RSS2JSONで記事の取得に失敗しました。');
+                }
+
+                data.items.forEach(item => {
+                    const dateObj = new Date(item.pubDate);
+                    // Dateオブジェクトが不正な場合（Invalid Date）のチェック
+                    if (isNaN(dateObj)) {
+                        console.warn('不正な日付フォーマット:', item.pubDate);
+                        return; // この記事はスキップ
+                    }
+                    
+                    const formattedDate = `${dateObj.getFullYear()}.${String(dateObj.getMonth() + 1).padStart(2, '0')}.${String(dateObj.getDate()).padStart(2, '0')}`;
+                    
+                    const listItem = document.createElement('li');
+                    listItem.className = 'note-article-item';
+                    
+                    listItem.innerHTML = `
+                        <time class="article-date">${formattedDate}</time>
+                        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="article-title">
+                            ${item.title}
+                        </a>
+                    `;
+                    
+                    this.listElement.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('note記事の読み込み中にエラーが発生しました:', error);
+                this.listElement.innerHTML = '<li>記事の読み込みに失敗しました。</li>';
+            });
     }
 
     initializeCustomEffects() {
