@@ -489,6 +489,13 @@ section {
     letter-spacing: 1px;
 }
 
+.work-tag2 {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
 /* About Section */
 .about {
     background: #f8f9fa;
@@ -1048,10 +1055,22 @@ section {
     margin-bottom: 0.5rem;
 }
 
+.project-title2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
 .project-subtitle {
     font-size: 1.2rem;
     color: #666;
     margin-bottom: 1.5rem;
+}
+
+.project-subtitle2 {
+    font-size: 1rem;
+    color: #666;
 }
 
 .project-tags {
@@ -1088,6 +1107,14 @@ section {
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     border-top: 4px solid #333;
+}
+.overview-item2 {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid #333;
+    overflow: hidden;
+    margin-top: 60px;
 }
 
 .overview-title {
@@ -1132,6 +1159,14 @@ section {
     margin-bottom: 1.5rem;
     border-left: 5px solid #333;
     padding-left: 1rem;
+}
+
+.section-heading2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .project-image {
@@ -1328,6 +1363,41 @@ section {
     color: white;
     border-color: #2d2d2d;
     transform: translateY(-2px);
+}
+
+/* 縦長の画像をサイト内でスクロールさせるための設定 */
+.project-image-scroll-container {
+    /* スクロールを発生させるための**高さ**を設定します。 */
+    /* ここでは画面の高さの約80%としていますが、適宜調整してください。 */
+    max-height: 80vh; 
+    
+    /* 縦方向（Y軸）のスクロールを有効にします。 */
+    /* **auto**にすると、内容が溢れたときだけスクロールバーが表示されます。 */
+    overflow-y: auto;
+    
+    /* 横方向のスクロールは不要なので非表示（または hidden）にします。 */
+    overflow-x: hidden;
+    
+    /* 任意: コンテナとページの他の要素との間に余白を追加 */
+    margin: 30px auto; 
+    
+    /* 任意: スクロール領域であることを示すために、ボーダーを追加できます */
+    /* border: 1px solid #ccc; */
+}
+
+/* 画像自体はコンテナの幅いっぱいに表示されるようにします */
+.project-image-scroll-container .project-image {
+    /* 親コンテナの幅に合わせて画像を表示します */
+    width: 100%;
+    /* 縦に長い画像なので、高さを自動調整（元の比率を維持） */
+    height: auto;
+    /* max-widthやdisplayの設定は、既にあるスタイルで十分な場合もありますが、念のため */
+    display: block;
+}
+
+
+.hoge{
+text-align:center;
 }
 /* ==================================== */
 /* レスポンシブ対応スタイル          */
