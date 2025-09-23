@@ -284,7 +284,7 @@ class ContactForm {
         const subject = formData.get('subject');
         const message = formData.get('message');
 
-        const mailtoLink = `mailto:yusaku.kimura@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        const mailtoLink = `mailto:yuusakukimura1188@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
             `お名前: ${name}\nメールアドレス: ${email}\n\nメッセージ:\n${message}`
         )}`;
 
