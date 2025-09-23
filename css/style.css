@@ -1240,6 +1240,10 @@ section {
     color: #333;
 }
 
+.related-link {
+    text-decoration: none;
+}
+
 /* お知らせセクションの基本レイアウト */
 .note-news-section {
     padding: 20px;
@@ -1398,6 +1402,81 @@ section {
 
 .hoge{
 text-align:center;
+}
+
+
+/* 新しいPDFビューアのコンテナ */
+.pdf-viewer-container {
+    max-width: 100%;
+    margin-top: 2rem;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* PDFを描画するcanvasのスタイル */
+#pdf-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+/* ページ操作コントロールのコンテナ */
+.pdf-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    border-radius: 0 0 12px 12px;
+}
+
+/* ボタンの共通スタイル */
+.pdf-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.8rem 1.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.pdf-btn:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.page-info-text {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .pdf-controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 /* ==================================== */
 /* レスポンシブ対応スタイル          */
