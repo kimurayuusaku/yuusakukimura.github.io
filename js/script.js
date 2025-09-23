@@ -626,3 +626,93 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 });
+
+// PDF.jsのライブラリとワーカーを読み込む
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js"></script>
+
+const pdfUrl = 'images/deta2.pdf'; // PDFファイルへのパスを指定
+let pdfDoc = null;
+let pageNum = 1;
+let pageRendering = false;
+let pageNumPending = null;
+
+const canvas = document.getElementById('pdf-canvas');
+const ctx = canvas.getContext('2d');
+const pageInfo = document.getElementById('page-info');
+const prevBtn = document.getElementById('prev-page');
+const nextBtn = document.getElementById('next-page');
+
+// ページを描画する関数
+function renderPage(num) {
+    pageRendering = true;
+    pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: 1.0 });
+        const scale = canvas.width / viewport.width;
+        const scaledViewport = page.getViewport({ scale: scale });
+
+        canvas.height = scaledViewport.height;
+        canvas.width = scaledViewport.width;
+
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: scaledViewport
+        };
+
+        const renderTask = page.render(renderContext);
+        renderTask.promise.then(function() {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+
+    pageInfo.textContent = `ページ ${pageNum} / ${pdfDoc.numPages}`;
+}
+
+// ページをキューに入れる関数
+function queueRenderPage(num) {
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+}
+
+// ボタンのクリックイベント
+prevBtn.addEventListener('click', () => {
+    if (pageNum <= 1) return;
+    pageNum--;
+    queueRenderPage(pageNum);
+});
+
+nextBtn.addEventListener('click', () => {
+    if (pageNum >= pdfDoc.numPages) return;
+    pageNum++;
+    queueRenderPage(pageNum);
+});
+
+// PDFドキュメントの読み込み
+pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+    pdfDoc = pdf;
+    // 初回読み込み時に最初のページを描画
+    renderPage(pageNum);
+    // ボタンの有効/無効を更新
+    updateButtonStates();
+});
+
+// ボタンの状態を更新する関数
+function updateButtonStates() {
+    prevBtn.disabled = pageNum <= 1;
+    nextBtn.disabled = pageNum >= pdfDoc.numPages;
+}
+
+// ウィンドウのリサイズ時にcanvasサイズを調整
+window.addEventListener('resize', () => {
+    // 描画が完了するまで待機
+    if (!pageRendering) {
+        renderPage(pageNum);
+    }
+});
