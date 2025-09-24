@@ -191,33 +191,50 @@ body {
 
 /* Hero Section */
 .hero {
+    /* 画面全体に広がるように高さを設定 */
     height: 100vh;
+    /* Heroセクションのパディングをリセット */
+    padding: 0; 
+    /* その他のスタイルは必要に応じて */
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-bg {
+    /* 背景として機能させるための位置設定 */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #2D2D2D;
+    z-index: -1;
     overflow: hidden;
 }
 
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* タイル要素を格納するコンテナ */
+.hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));    
     width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #2d2d2d 0%, #4a4a4a 50%, #6b6b6b 100%);
-    z-index: -2;
+    height: 120%; /* 親要素のhero-bgに合わせる */
 }
 
-.hero-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-    animation: backgroundMove 20s linear infinite;
+.grid-item {
+    /* デフォルトの背景色を黒に設定 */
+    background-color: #fff;
+    /* 枠の色を薄い灰色に設定 */
+    border: 3px solid rgba(100, 100, 100, 0.5); /* 灰色の枠 */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.grid-item.is-active {
+    background-color: #2D2D2D;
+    border-color: rgba(100, 100, 100, 0.5);
 }
 
 .hero-overlay {
@@ -236,13 +253,19 @@ body {
 }
 
 .hero-content {
-    text-align: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    justify-content: center;
     color: white;
     z-index: 1;
 }
 
 .hero-title {
-    font-size: 65px;
+    font-size: 70px;
     font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.1;
@@ -254,7 +277,9 @@ body {
     opacity: 0;
     transform: translateY(50px);
     animation: heroTitleAnimation 1s ease forwards;
+    height: 1.2em; /* 1行の高さにあわせて調整 */
 }
+
 
 .hero-title-line:nth-child(2) {
     animation-delay: 0.2s;
@@ -267,6 +292,60 @@ body {
     }
 }
 
+.hero-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: none;
+    color: #fff; /* デフォルトのテキスト色を白に設定 */
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* ホバー時に表示される白い円形のエフェクト */
+.hero-text::after {
+    content: '';
+    position: absolute;
+    top: var(--mask-y);
+    left: var(--mask-x);
+    width: 100px; /* マスクのサイズ (直径) */
+    height: 100px;
+    border-radius: 50%;
+    background: #fff; /* マスクの色 (白) */
+    transform: translate(-50%, -50%) scale(0); /* 初期状態は非表示 */
+    pointer-events: none;
+    mix-blend-mode: difference; /* ここが重要！テキストの色を反転させる */
+    transition: transform 0.3s ease;
+}
+
+/* ホバー時に円を拡大表示 */
+.hero-text:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* その他のhero-text内のスタイルはそのまま */
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    letter-spacing: 3px;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.5s forwards;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.7s forwards;
+}
 .hero-subtitle {
     font-size: 1.5rem;
     font-weight: 300;
