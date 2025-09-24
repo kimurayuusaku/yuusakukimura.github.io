@@ -14,12 +14,10 @@ class NavigationController {
     }
 
     bindEvents() {
-        // Hamburger menu toggle
         this.hamburger.addEventListener('click', () => {
             this.toggleMobileMenu();
         });
 
-        // Smooth scroll for navigation links
         this.navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -29,12 +27,10 @@ class NavigationController {
             });
         });
 
-        // Scroll event
         window.addEventListener('scroll', () => {
             this.handleScroll();
         });
 
-        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!this.navMenu.contains(e.target) && !this.hamburger.contains(e.target)) {
                 this.closeMobileMenu();
@@ -56,14 +52,11 @@ class NavigationController {
 
     handleScroll() {
         const currentScrollY = window.scrollY;
-        
-        // Add scrolled class to header
         if (currentScrollY > 50) {
             this.header.classList.add('scrolled');
         } else {
             this.header.classList.remove('scrolled');
         }
-
         this.lastScrollY = currentScrollY;
     }
 
@@ -72,7 +65,6 @@ class NavigationController {
         if (element) {
             const headerHeight = this.header.offsetHeight;
             const elementPosition = element.offsetTop - headerHeight;
-            
             window.scrollTo({
                 top: elementPosition,
                 behavior: 'smooth'
@@ -108,8 +100,6 @@ class AnimationController {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                
-                // Animate skill bars
                 if (entry.target.classList.contains('skill-item')) {
                     this.animateSkillBar(entry.target);
                 }
@@ -120,7 +110,6 @@ class AnimationController {
     animateSkillBar(skillItem) {
         const progressBar = skillItem.querySelector('.skill-progress');
         const progress = progressBar.getAttribute('data-progress');
-        
         setTimeout(() => {
             progressBar.style.width = progress + '%';
         }, 200);
@@ -135,7 +124,6 @@ class AnimationController {
     updateParallax() {
         const scrolled = window.pageYOffset;
         const parallaxElements = document.querySelectorAll('.parallax');
-        
         parallaxElements.forEach(element => {
             const speed = element.dataset.speed || 0.5;
             const yPos = -(scrolled * speed);
@@ -153,7 +141,6 @@ class AnimationController {
     fadeInOnScroll(element) {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
-        
         if (elementTop < window.innerHeight - elementVisible) {
             element.classList.add('visible');
         }
@@ -182,11 +169,8 @@ class WorkGallery {
     }
 
     handleFilterClick(button) {
-        // Update active button
         this.filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
-
-        // Filter items
         const filter = button.getAttribute('data-filter');
         this.filterWorks(filter);
     }
@@ -194,7 +178,6 @@ class WorkGallery {
     filterWorks(category) {
         this.workItems.forEach(item => {
             const itemCategory = item.getAttribute('data-category');
-            
             if (category === 'all' || itemCategory === category) {
                 item.style.display = 'block';
                 setTimeout(() => {
@@ -239,7 +222,6 @@ class ContactForm {
 
     async handleSubmit() {
         const formData = new FormData(this.form);
-        
         if (!this.validateForm(formData)) {
             this.showMessage('すべての項目を正しく入力してください。', 'error');
             return;
@@ -268,7 +250,6 @@ class ContactForm {
             return false;
         }
 
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return false;
@@ -278,20 +259,14 @@ class ContactForm {
     }
 
     async submitForm(formData) {
-        // Simulate form submission with mailto
         const name = formData.get('name');
         const email = formData.get('email');
         const subject = formData.get('subject');
         const message = formData.get('message');
-
         const mailtoLink = `mailto:yuusakukimura1188@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
             `お名前: ${name}\nメールアドレス: ${email}\n\nメッセージ:\n${message}`
         )}`;
-
-        // Open mail client
         window.location.href = mailtoLink;
-
-        // Simulate async operation
         return new Promise(resolve => {
             setTimeout(resolve, 1000);
         });
@@ -308,7 +283,6 @@ class ContactForm {
     }
 
     showMessage(message, type) {
-        // Create message element
         const messageEl = document.createElement('div');
         messageEl.className = `form-message ${type}`;
         messageEl.textContent = message;
@@ -325,15 +299,10 @@ class ContactForm {
             transition: transform 0.3s ease;
             ${type === 'success' ? 'background: #4CAF50;' : 'background: #f44336;'}
         `;
-
         document.body.appendChild(messageEl);
-
-        // Animate in
         setTimeout(() => {
             messageEl.style.transform = 'translateX(0)';
         }, 100);
-
-        // Remove after 5 seconds
         setTimeout(() => {
             messageEl.style.transform = 'translateX(100%)';
             setTimeout(() => {
@@ -358,7 +327,6 @@ class LoadingAnimation {
     startLoading() {
         const interval = setInterval(() => {
             this.progress += Math.random() * 15;
-            
             if (this.progress >= 100) {
                 this.progress = 100;
                 clearInterval(interval);
@@ -366,7 +334,6 @@ class LoadingAnimation {
                     this.hide();
                 }, 500);
             }
-            
             this.updateProgress(this.progress);
         }, 100);
     }
@@ -380,7 +347,6 @@ class LoadingAnimation {
     hide() {
         this.loadingScreen.classList.add('hidden');
         document.body.classList.remove('no-scroll');
-        
         setTimeout(() => {
             this.loadingScreen.style.display = 'none';
         }, 500);
@@ -415,8 +381,45 @@ class Utils {
     }
 }
 
-// Main Application
+// HeroTextEffect Controller
+class HeroTextEffect {
+    constructor() {
+        this.heroText = document.querySelector('.hero-text');
+    }
 
+    init() {
+        if (!this.heroText) return;
+
+        this.heroText.addEventListener('mouseenter', () => this.handleMouseEnter());
+        this.heroText.addEventListener('mouseleave', () => this.handleMouseLeave());
+        this.heroText.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    }
+
+    handleMouseEnter() {
+        // ここではクラスを追加する必要はありません
+    }
+
+    handleMouseLeave() {
+        // マウスが離れたら円を非表示にする
+        this.heroText.style.setProperty('--mask-size', '0');
+    }
+
+    handleMouseMove(e) {
+        const rect = this.heroText.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // CSS変数にマウス位置を設定
+        this.heroText.style.setProperty('--mask-x', `${x}px`);
+        this.heroText.style.setProperty('--mask-y', `${y}px`);
+
+        // マウスが動いたら円を拡大
+        this.heroText.style.setProperty('--mask-size', '100px');
+    }
+}
+
+
+// Main Application
 class PortfolioApp {
     constructor() {
         this.navigationController = new NavigationController();
@@ -424,13 +427,12 @@ class PortfolioApp {
         this.workGallery = new WorkGallery();
         this.contactForm = new ContactForm();
         this.loadingAnimation = new LoadingAnimation();
-        // ★追加: RSS APIのエンドポイントを設定
+        this.heroTextEffect = new HeroTextEffect(); // HeroTextEffectを追加
         this.NOTE_API_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https://note.com/dododo0125/rss';
         this.listElement = document.getElementById('note-article-list');
     }
 
     init() {
-        // Wait for DOM to be fully loaded
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 this.initializeApp();
@@ -441,18 +443,15 @@ class PortfolioApp {
     }
 
     initializeApp() {
-        // Initialize loading animation first
         this.loadingAnimation.init();
-
-        // Initialize other components after a short delay
         setTimeout(() => {
             this.navigationController.init();
             this.animationController.init();
             this.workGallery.init();
             this.contactForm.init();
+            this.heroTextEffect.init(); // ここで初期化
             this.initializeCustomEffects();
-            // ★修正: アプリケーション初期化後に記事読み込みを実行
-            this.fetchNoteArticles(); 
+            this.fetchNoteArticles();
         }, 100);
     }
 
@@ -461,10 +460,7 @@ class PortfolioApp {
             console.error('note-article-list要素が見つかりませんでした。');
             return;
         }
-
-        // 記事リストをクリア
         this.listElement.innerHTML = '';
-
         fetch(this.NOTE_API_URL)
             .then(response => {
                 if (!response.ok) {
@@ -474,31 +470,24 @@ class PortfolioApp {
             })
             .then(data => {
                 if (data.status !== 'ok' || !data.items) {
-                    // ★デバッグ: 取得したデータをコンソールに出力して確認
                     console.error('RSS2JSONからのデータ:', data);
                     throw new Error('RSS2JSONで記事の取得に失敗しました。');
                 }
-
                 data.items.forEach(item => {
                     const dateObj = new Date(item.pubDate);
-                    // Dateオブジェクトが不正な場合（Invalid Date）のチェック
                     if (isNaN(dateObj)) {
                         console.warn('不正な日付フォーマット:', item.pubDate);
-                        return; // この記事はスキップ
+                        return;
                     }
-                    
                     const formattedDate = `${dateObj.getFullYear()}.${String(dateObj.getMonth() + 1).padStart(2, '0')}.${String(dateObj.getDate()).padStart(2, '0')}`;
-                    
                     const listItem = document.createElement('li');
                     listItem.className = 'note-article-item';
-                    
                     listItem.innerHTML = `
                         <time class="article-date">${formattedDate}</time>
                         <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="article-title">
                             ${item.title}
                         </a>
                     `;
-                    
                     this.listElement.appendChild(listItem);
                 });
             })
@@ -509,25 +498,17 @@ class PortfolioApp {
     }
 
     initializeCustomEffects() {
-        // Add custom scroll effects
         const throttledScroll = Utils.throttle(() => {
             this.handleCustomScroll();
         }, 16);
-
         window.addEventListener('scroll', throttledScroll);
-
-        // Add hover effects for work items
         this.addWorkItemHoverEffects();
-
-        // Add typing effect for hero title
         this.addTypingEffect();
     }
 
     handleCustomScroll() {
         const scrolled = window.pageYOffset;
         const rate = scrolled * -0.5;
-
-        // Parallax effect for hero background
         const heroBackground = document.querySelector('.hero-background');
         if (heroBackground) {
             heroBackground.style.transform = `translateY(${rate}px)`;
@@ -536,12 +517,10 @@ class PortfolioApp {
 
     addWorkItemHoverEffects() {
         const workItems = document.querySelectorAll('.work-item');
-        
         workItems.forEach(item => {
             item.addEventListener('mouseenter', () => {
                 item.style.transform = 'translateY(-10px) scale(1.02)';
             });
-
             item.addEventListener('mouseleave', () => {
                 item.style.transform = 'translateY(0) scale(1)';
             });
@@ -550,11 +529,9 @@ class PortfolioApp {
 
     addTypingEffect() {
         const heroTitleLines = document.querySelectorAll('.hero-title-line');
-        
         heroTitleLines.forEach((line, index) => {
             const text = line.textContent;
             line.textContent = '';
-            
             setTimeout(() => {
                 let i = 0;
                 const typeInterval = setInterval(() => {
@@ -564,7 +541,7 @@ class PortfolioApp {
                         clearInterval(typeInterval);
                     }
                 }, 100);
-            }, index * 1000 + 1500);
+            }, index * 1000 + 7000);
         });
     }
 }
@@ -575,13 +552,10 @@ app.init();
 
 // Add some additional interactive features
 document.addEventListener('DOMContentLoaded', () => {
-    // Add smooth reveal animation for sections
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
         section.classList.add('fade-in');
     });
-
-    // Add click effect for buttons
     const buttons = document.querySelectorAll('button, .btn');
     buttons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -590,7 +564,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const size = Math.max(rect.width, rect.height);
             const x = e.clientX - rect.left - size / 2;
             const y = e.clientY - rect.top - size / 2;
-            
             ripple.style.cssText = `
                 position: absolute;
                 width: ${size}px;
@@ -603,18 +576,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 animation: ripple 0.6s ease-out;
                 pointer-events: none;
             `;
-            
             this.style.position = 'relative';
             this.style.overflow = 'hidden';
             this.appendChild(ripple);
-            
             setTimeout(() => {
                 ripple.remove();
             }, 600);
         });
     });
-
-    // Add CSS for ripple animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes ripple {
@@ -627,92 +596,164 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(style);
 });
 
-// PDF.jsのライブラリとワーカーを読み込む
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js"></script>
+class TileAnimation {
+    constructor() {
+        this.heroGrid = document.querySelector('.hero-grid');
+    }
 
-const pdfUrl = 'images/deta2.pdf'; // PDFファイルへのパスを指定
-let pdfDoc = null;
-let pageNum = 1;
-let pageRendering = false;
-let pageNumPending = null;
+    init() {
+        if (!this.heroGrid) {
+            return;
+        }
+        this.createTiles();
+        window.addEventListener('resize', () => this.createTiles());
+        this.animateTiles();
+    }
 
-const canvas = document.getElementById('pdf-canvas');
-const ctx = canvas.getContext('2d');
-const pageInfo = document.getElementById('page-info');
-const prevBtn = document.getElementById('prev-page');
-const nextBtn = document.getElementById('next-page');
+    createTiles() {
+        this.heroGrid.innerHTML = ''; // 既存のタイルをクリア
+        const gridWidth = this.heroGrid.clientWidth;
+        const gridHeight = this.heroGrid.clientHeight;
+        const tileSize = 80;
+        const cols = Math.ceil(gridWidth / tileSize);
+        const rows = Math.ceil(gridHeight / tileSize);
 
-// ページを描画する関数
-function renderPage(num) {
-    pageRendering = true;
-    pdfDoc.getPage(num).then(function(page) {
-        const viewport = page.getViewport({ scale: 1.0 });
-        const scale = canvas.width / viewport.width;
-        const scaledViewport = page.getViewport({ scale: scale });
+        for (let i = 0; i < cols * rows; i++) {
+            const tile = document.createElement('div');
+            tile.classList.add('grid-item');
+            this.heroGrid.appendChild(tile);
+        }
+    }
 
-        canvas.height = scaledViewport.height;
-        canvas.width = scaledViewport.width;
+        animateTiles() {
+            const tiles = Array.from(this.heroGrid.children);
+            const shuffledTiles = this.shuffleArray(tiles);
+            
+            // ここで全体の遅延時間を設定（1000ms = 1秒）
+            const initialDelay = 2000;
 
-        const renderContext = {
-            canvasContext: ctx,
-            viewport: scaledViewport
-        };
+            shuffledTiles.forEach((tile, index) => {
+                setTimeout(() => {
+                    tile.classList.add('is-active');
+                    // 'is-active'クラスを削除したい場合は、以下のように変更
+                    // tile.classList.remove('is-active');
+                }, initialDelay + (index * 30)); // 全体の遅延時間 + タイルごとの遅延
+            });
+        }
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+}
 
-        const renderTask = page.render(renderContext);
-        renderTask.promise.then(function() {
-            pageRendering = false;
-            if (pageNumPending !== null) {
-                renderPage(pageNumPending);
-                pageNumPending = null;
-            }
+
+window.addEventListener('DOMContentLoaded', () => {
+    new TileAnimation().init();
+});
+
+// PDF Viewer
+class PdfViewer {
+    constructor(pdfUrl) {
+        this.pdfUrl = pdfUrl;
+        this.pdfDoc = null;
+        this.pageNum = 1;
+        this.pageRendering = false;
+        this.pageNumPending = null;
+        this.canvas = document.getElementById('pdf-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.prevButton = document.getElementById('prev-page');
+        this.nextButton = document.getElementById('next-page');
+        this.pageInfoSpan = document.getElementById('page-info');
+    }
+
+    init() {
+        if (!this.canvas) {
+            return;
+        }
+        this.loadPdf();
+        this.bindEvents();
+    }
+
+    loadPdf() {
+        pdfjsLib.getDocument(this.pdfUrl).promise.then(pdfDoc => {
+            this.pdfDoc = pdfDoc;
+            this.renderPage(this.pageNum);
+            this.updatePageInfo();
+        }).catch(err => {
+            console.error('PDFファイルの読み込みに失敗しました:', err);
+            this.pageInfoSpan.textContent = 'PDFの読み込みに失敗しました';
+            this.prevButton.disabled = true;
+            this.nextButton.disabled = true;
         });
-    });
+    }
 
-    pageInfo.textContent = `ページ ${pageNum} / ${pdfDoc.numPages}`;
-}
+    renderPage(num) {
+        this.pageRendering = true;
+        this.pdfDoc.getPage(num).then(page => {
+            const viewport = page.getViewport({ scale: 1.5 });
+            this.canvas.height = viewport.height;
+            this.canvas.width = viewport.width;
 
-// ページをキューに入れる関数
-function queueRenderPage(num) {
-    if (pageRendering) {
-        pageNumPending = num;
-    } else {
-        renderPage(num);
+            const renderContext = {
+                canvasContext: this.ctx,
+                viewport: viewport
+            };
+
+            const renderTask = page.render(renderContext);
+            renderTask.promise.then(() => {
+                this.pageRendering = false;
+                if (this.pageNumPending !== null) {
+                    this.renderPage(this.pageNumPending);
+                    this.pageNumPending = null;
+                }
+            });
+        });
+    }
+
+    bindEvents() {
+        this.prevButton.addEventListener('click', () => {
+            if (this.pageNum <= 1) {
+                return;
+            }
+            this.pageNum--;
+            this.queueRenderPage(this.pageNum);
+            this.updatePageInfo();
+        });
+
+        this.nextButton.addEventListener('click', () => {
+            if (this.pageNum >= this.pdfDoc.numPages) {
+                return;
+            }
+            this.pageNum++;
+            this.queueRenderPage(this.pageNum);
+            this.updatePageInfo();
+        });
+    }
+
+    queueRenderPage(num) {
+        if (this.pageRendering) {
+            this.pageNumPending = num;
+        } else {
+            this.renderPage(num);
+        }
+    }
+
+    updatePageInfo() {
+        this.pageInfoSpan.textContent = `${this.pageNum} / ${this.pdfDoc.numPages}`;
     }
 }
 
-// ボタンのクリックイベント
-prevBtn.addEventListener('click', () => {
-    if (pageNum <= 1) return;
-    pageNum--;
-    queueRenderPage(pageNum);
-});
-
-nextBtn.addEventListener('click', () => {
-    if (pageNum >= pdfDoc.numPages) return;
-    pageNum++;
-    queueRenderPage(pageNum);
-});
-
-// PDFドキュメントの読み込み
-pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
-    pdfDoc = pdf;
-    // 初回読み込み時に最初のページを描画
-    renderPage(pageNum);
-    // ボタンの有効/無効を更新
-    updateButtonStates();
-});
-
-// ボタンの状態を更新する関数
-function updateButtonStates() {
-    prevBtn.disabled = pageNum <= 1;
-    nextBtn.disabled = pageNum >= pdfDoc.numPages;
-}
-
-// ウィンドウのリサイズ時にcanvasサイズを調整
-window.addEventListener('resize', () => {
-    // 描画が完了するまで待機
-    if (!pageRendering) {
-        renderPage(pageNum);
-    }
+// 既存のDOMContentLoadedイベントリスナー内に新しいクラスを初期化
+window.addEventListener('DOMContentLoaded', () => {
+    // 既存の初期化コード...
+    new TileAnimation().init();
+    
+    // PDFビューアの初期化を追加
+    // PDFのURLをここに指定してください
+    // 例: new PdfViewer('pdf/sample.pdf').init();
+    // 以下の行のコメントを解除し、URLを実際のPDFファイルのパスに変更してください
+    new PdfViewer('images/deta1.pdf').init();
 });
