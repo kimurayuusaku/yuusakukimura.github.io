@@ -151,7 +151,7 @@ class AnimationController {
 class WorkGallery {
     constructor() {
         this.filterButtons = document.querySelectorAll('.filter-btn');
-        this.workItems = document.querySelectorAll('.work-item');
+        this.workItems = document.querySelectorAll('.work-item-placeholder');
         this.workGrid = document.getElementById('work-grid');
     }
 
@@ -205,8 +205,10 @@ class WorkGallery {
 class ContactForm {
     constructor() {
         this.form = document.getElementById('contact-form');
-        this.submitBtn = this.form.querySelector('.submit-btn');
-        this.btnText = this.submitBtn.querySelector('.btn-text');
+        if (this.form) { 
+            this.submitButton = this.form.querySelector('.submit-btn'); 
+            this.bindEvents();
+        }
     }
 
     init() {
@@ -654,3 +656,107 @@ window.addEventListener('DOMContentLoaded', () => {
     new TileAnimation().init();
 });
 
+// カスタムカーソル機能
+// =======================================================
+// 1. カーソル動作の基盤となる共通クラス
+// =======================================================
+class CursorController {
+    constructor(cursorElement) {
+        this.cursor = cursorElement;
+        this.bindCommonEvents();
+        // 初期スタック防止のため、初期はtransitionを無効化
+        this.cursor.classList.add('no-transition');
+    }
+
+    bindCommonEvents() {
+        // マウスの追従処理
+        document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        
+        // ウィンドウ外に出た/入った時の処理
+        document.addEventListener('mouseleave', () => this.cursor.style.opacity = '0');
+        // ページに入った時の処理は、Basic/Heroクラスで上書きされる
+        document.addEventListener('mouseenter', this.handlePageEnter.bind(this));
+    }
+
+    handleMouseMove(e) {
+        // マウスが動いたらtransitionを有効化
+        if (this.cursor.classList.contains('no-transition')) {
+            this.cursor.classList.remove('no-transition');
+        }
+        this.cursor.style.left = e.clientX + 'px';
+        this.cursor.style.top = e.clientY + 'px';
+    }
+
+    // このメソッドは子クラスで実装されます
+    handlePageEnter() {}
+}
+
+// =======================================================
+// 2. その他ページ用クラス (.custom-cursor2 に対応)
+// =======================================================
+class BasicCursor extends CursorController {
+    constructor(cursorElement) {
+        super(cursorElement);
+        // 常に表示
+        this.cursor.style.opacity = '1';
+    }
+
+    // ページに入った瞬間、常に表示する
+    handlePageEnter() {
+        this.cursor.style.opacity = '1';
+    }
+}
+
+// =======================================================
+// 3. index.html用クラス (.custom-cursor に対応)
+// =======================================================
+class HeroAwareCursor extends CursorController {
+    constructor(cursorElement, heroSectionId = 'hero') {
+        super(cursorElement);
+        this.heroSection = document.getElementById(heroSectionId);
+        
+        // ヒーローセクションがあるため、初期状態は非表示
+        this.cursor.style.opacity = '0';
+        
+        if (this.heroSection) {
+            this.bindHeroEvents();
+        }
+        // #hero がない場合は、念のため BasicCursor と同じ動作にする
+         else {
+             this.cursor.style.opacity = '1';
+        }
+    }
+
+    bindHeroEvents() {
+        // ヒーローセクション内の制御
+        this.heroSection.addEventListener('mouseleave', () => {
+            this.cursor.style.opacity = '1'; // ヒーローセクションから出たら表示
+        });
+
+        this.heroSection.addEventListener('mouseenter', () => {
+            this.cursor.style.opacity = '0'; // ヒーローセクションに入ったら非表示
+        });
+    }
+
+    // ページに入った瞬間、表示を試みる (その後、#heroのmouseenterで制御される)
+    handlePageEnter() {
+        this.cursor.style.opacity = '1';
+    }
+}
+
+// =======================================================
+// 4. 実行ロジック (ページの状況に応じて適切なクラスを起動)
+// =======================================================
+// DOMが読み込まれた後に実行
+window.addEventListener('load', () => { // 'load'イベントを使うことで、より確実に要素が利用可能になるのを待つ
+    const cursorHero = document.querySelector('.custom-cursor');
+    const cursorOther = document.querySelector('.custom-cursor2');
+
+    if (cursorHero) {
+        // index.htmlなどで .custom-cursor が見つかった場合
+        new HeroAwareCursor(cursorHero, 'hero');
+    } else if (cursorOther) {
+        // その他のページで .custom-cursor2 が見つかった場合
+        new BasicCursor(cursorOther);
+    }
+});
