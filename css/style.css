@@ -702,12 +702,23 @@ section {
     width: 100%;
 }
 
+.license-section2 {
+    margin-top: 30px;
+    padding: 0 0px 0px 0px;
+    background-color: #f5f8ff;
+    width: 100%;
+}
 .license-title {
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
+.license-title2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
 .license-list {
     list-style-type: disc;
     margin-left: 2em;
@@ -1741,16 +1752,215 @@ button:hover ~ .custom-cursor2,
     transition: none !important; 
 }
 
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-    .pdf-controls {
-        flex-direction: column;
-        gap: 1rem;
+.active-title {
+    color: #333;
+    font-size: 20px;
+    width: 100%;
+    border: #1a1a1a solid 1px;
+    padding: 20px 40px;
+    letter-spacing: 2px;
+}
+.active-title2 {
+    color: #333;
+    font-size: 20px;
+    width: 100%;
+    border: #1a1a1a solid 1px;
+    padding: 20px 40px;
+    letter-spacing: 2px;
+    border-top: none;
+}
+
+
+/* 新しいアニメーション定義: 右から左へ流れ、親要素の幅だけ移動する */
+@keyframes flowLoop {
+    0% {
+        transform: translateY(-50%) translateX(0); /* 開始位置: 親要素の右外側 */
+    }
+    100% {
+        /* テキストの長さ分を考慮して左へ移動し、次のループの準備をする */
+        transform: translateY(-50%) translateX(-100%);
     }
 }
-/* ==================================== */
-/* レスポンシブ対応スタイル          */
-/* ==================================== */
+
+/* 1. ホバー対象のコンテナ設定 */
+#active-title {
+    position: relative;
+    overflow: hidden; /* 流れるアニメーションのために必須 */
+    cursor: pointer;
+    /* 必要に応じて、ここで文字サイズや色などを定義してください */
+    /* 例: font-size: 24px; color: #333; */
+}
+
+/* 2. ホバー時に元のテキスト (<p>タグ) を非表示にする */
+#active-title:hover > p {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* 3. 擬似要素 (流れる新しいテキスト) の設定 */
+#active-title::before {
+    /* ★ここにホバー時に表示したい新しいテキストを入力してください★ */
+    content: "note-Yusaku Kimura | Aiming to become an IT engineer and designer despite having a developmental disorder."; 
+    
+    position: absolute;
+    top: 50%;
+    /* テキストが div の左右で途切れないよう、幅を広くとる */
+    min-width: 200%; 
+    left: 0;
+    
+    transform: translateY(-50%) translateX(0%); /* 初期位置: 画面右の外側 */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    opacity: 0; /* 通常時は非表示 */
+    pointer-events: none; 
+    
+    /* 元のテキストのスタイルをここで上書き/流用してください */
+    font-size: 6rem; 
+    font-weight: 700;
+    color: #aeaeae; 
+}
+
+/* 4. ホバー時に新しいテキストを表示し、アニメーションを適用する */
+#active-title:hover::before {
+    opacity: 0.8;
+    /* 流れるアニメーションを適用 */
+    /* 速度: 5秒 | ループ: 無限 (infinite) | 動き: linear (一定速度) */
+    animation: flowLoop 120s linear infinite; 
+}
+
+/* 1. ホバー対象のコンテナ設定 */
+#active-title2 {
+    position: relative;
+    overflow: hidden; /* 流れるアニメーションのために必須 */
+    cursor: pointer;
+    /* 必要に応じて、ここで文字サイズや色などを定義してください */
+    /* 例: font-size: 24px; color: #333; */
+}
+
+/* 2. ホバー時に元のテキスト (<p>タグ) を非表示にする */
+#active-title2:hover > p {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* 3. 擬似要素 (流れる新しいテキスト) の設定 */
+#active-title2::before {
+    /* ★ここにホバー時に表示したい新しいテキストを入力してください★ */
+    content: "HTML, CSS, and JavaScript animation code introduction."; 
+    
+    position: absolute;
+    top: 50%;
+    /* テキストが div の左右で途切れないよう、幅を広くとる */
+    min-width: 200%; 
+    left: 0;
+    
+    transform: translateY(-50%) translateX(0%); /* 初期位置: 画面右の外側 */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    opacity: 0; /* 通常時は非表示 */
+    pointer-events: none; 
+    
+    /* 元のテキストのスタイルをここで上書き/流用してください */
+    font-size: 6rem; 
+    font-weight: 700;
+    color: #aeaeae; 
+}
+
+/* 4. ホバー時に新しいテキストを表示し、アニメーションを適用する */
+#active-title2:hover::before {
+    opacity: 0.8;
+    /* 流れるアニメーションを適用 */
+    /* 速度: 5秒 | ループ: 無限 (infinite) | 動き: linear (一定速度) */
+    animation: flowLoop 60s linear infinite; 
+}
+
+/* 1. ホバー対象のコンテナ設定 */
+#active-title3 {
+    position: relative;
+    overflow: hidden; /* 流れるアニメーションのために必須 */
+    cursor: pointer;
+    /* 必要に応じて、ここで文字サイズや色などを定義してください */
+    /* 例: font-size: 24px; color: #333; */
+}
+
+/* 2. ホバー時に元のテキスト (<p>タグ) を非表示にする */
+#active-title3:hover > p {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* 3. 擬似要素 (流れる新しいテキスト) の設定 */
+#active-title3::before {
+    /* ★ここにホバー時に表示したい新しいテキストを入力してください★ */
+    content: "Motion graphics research site.Motion graphics research site."; 
+    
+    position: absolute;
+    top: 50%;
+    /* テキストが div の左右で途切れないよう、幅を広くとる */
+    min-width: 200%; 
+    left: 0;
+    
+    transform: translateY(-50%) translateX(0%); /* 初期位置: 画面右の外側 */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    opacity: 0; /* 通常時は非表示 */
+    pointer-events: none; 
+    
+    /* 元のテキストのスタイルをここで上書き/流用してください */
+    font-size: 6rem; 
+    font-weight: 700;
+    color: #aeaeae; 
+}
+
+/* 4. ホバー時に新しいテキストを表示し、アニメーションを適用する */
+#active-title3:hover::before {
+    opacity: 0.8;
+    /* 流れるアニメーションを適用 */
+    /* 速度: 5秒 | ループ: 無限 (infinite) | 動き: linear (一定速度) */
+    animation: flowLoop 70s linear infinite; 
+}
+
+/* 1. ホバー対象のコンテナ設定 */
+#active-title4 {
+    position: relative;
+    overflow: hidden; /* 流れるアニメーションのために必須 */
+    cursor: pointer;
+    /* 必要に応じて、ここで文字サイズや色などを定義してください */
+    /* 例: font-size: 24px; color: #333; */
+}
+
+/* 2. ホバー時に元のテキスト (<p>タグ) を非表示にする */
+#active-title4:hover > p {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* 3. 擬似要素 (流れる新しいテキスト) の設定 */
+#active-title4::before {
+    /* ★ここにホバー時に表示したい新しいテキストを入力してください★ */
+    content: "V's Create - I Tried Singing! Delivery.V's Create - I Tried Singing! Delivery."; 
+    
+    position: absolute;
+    top: 50%;
+    /* テキストが div の左右で途切れないよう、幅を広くとる */
+    min-width: 200%; 
+    left: 0;
+    
+    transform: translateY(-50%) translateX(0%); /* 初期位置: 画面右の外側 */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    opacity: 0; /* 通常時は非表示 */
+    pointer-events: none; 
+    
+    /* 元のテキストのスタイルをここで上書き/流用してください */
+    font-size: 6rem; 
+    font-weight: 700;
+    color: #aeaeae; 
+}
+
+/* 4. ホバー時に新しいテキストを表示し、アニメーションを適用する */
+#active-title4:hover::before {
+    opacity: 0.8;
+    /* 流れるアニメーションを適用 */
+    /* 速度: 5秒 | ループ: 無限 (infinite) | 動き: linear (一定速度) */
+    animation: flowLoop 80s linear infinite; 
+}
 
 /* 768px以下の画面サイズ */
 @media (max-width: 768px) {
